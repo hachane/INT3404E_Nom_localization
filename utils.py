@@ -1,6 +1,6 @@
 import os
 import numpy as np 
-import matplotlib as plt 
+import matplotlib.pyplot as plt 
 import cv2
 
 # Just for testing, if u wanna test -> change the dir to ur repo's location like this.

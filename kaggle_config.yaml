@@ -1,0 +1,13 @@
+# path: '/kaggle/input/sino-nom-dataset'
+train: '/kaggle/input/sino-nom-dataset/images/train' #train (relative to 'path')
+
+val:
+  path: '/kaggle/input/sino-nom-dataset/images/val'
+  iou: 0.2  # Custom IoU threshold for NMS
+  conf: 0.25  # Custom confidence threshold
+
+# class num
+nc: 1
+
+# Class 
+names: ['nom_char']

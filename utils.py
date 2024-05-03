@@ -34,8 +34,36 @@ def plot_BB(image_path, coord_path):
         # Convert coordinates to integers
         x, y, w, h = map(int, (x, y, w, h))
 
-        rect_box = plt.Rectangle((x, y), w, h, color='red', fill=False, lw=3)
+        rect_box = plt.Rectangle((x, y), w, h, color='red', fill=False, lw=1)
         plt.gca().add_patch(rect_box)
+
+    plt.show()
+
+
+def plot_BB_center(image_path, coord_path):
+    image = read_image(image_path)
+
+    with open(coord_path, "r") as f:
+        coordinates = [line.strip().split()[1:] for line in f.readlines()]
+
+    plt.imshow(image)
+    for coord in coordinates:
+        # Split the coordinates
+        x_center, y_center, w, h = map(float, coord)
+        x = x_center - w/2
+        y = y_center - h/2
+        # Scale the coordinates to the image dimensions
+        x *= image.shape[1]
+        y *= image.shape[0]
+        w *= image.shape[1]
+        h *= image.shape[0]
+        # Convert coordinates to integers
+        x, y, w, h = map(int, (x, y, w, h))
+
+        rect_box = plt.Rectangle((x, y), w, h, color='red', fill=False, lw=1)
+        plt.gca().add_patch(rect_box)
+
+    plt.show()
 
 # CONVERT X_CENTER, Y_CENTER, 
 def convert_coord(labels_folder, output_folder):
@@ -61,11 +89,7 @@ def convert_coord(labels_folder, output_folder):
                     out.write(f"{label} {x_upper_left:.6f} {y_upper_left:.6f} {x_lower_right:.6f} {y_lower_right:.6f}\n")
 
 
-
-# os.makedirs("labels_new", exist_ok=True)
-# os.makedirs("labels_new/train", exist_ok=True)
-# os.makedirs("labels_new/val", exist_ok=True)
-# convert_coord("wb_localization_dataset/labels/train", "labels_new/train")
-# convert_coord("wb_localization_dataset/labels/val", "labels_new/val")
+def export_result ():
+    pass
 
 

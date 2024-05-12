@@ -53,6 +53,7 @@
 \usepackage{lmodern}
 \usepackage{mathtools}
 \usepackage{graphicx} % Required for inserting images
+\usepackage{subcaption}
 \begin{document}
 
 \thispagestyle{empty}
@@ -167,9 +168,9 @@ Danh sách các ảnh bị lệch sẽ tăng khi ta tăng rate lên.
 \\
 Đôi khi rate cao quá thì điều kiện lọc sẽ bị quá dễ $\rightarrow$ rất nhiều ảnh không đến mức dễ lỗi mà bị lọc là lỗi.
 \\
-$\rightarrow$ Nhóm thực hiện sinh với các rates là 0.3 và 0.35 vì trước đó đã thử với nhiều rate khác nhau thì quan sát được rate từ 0.3 -> 0.35 cho dữ liệu tin cậy (nhìn nhận qua folder ảnh).
+$\rightarrow$ Nhóm thực hiện sinh với các rates là $0.3$ và $0.35$ vì trước đó đã thử với nhiều rate khác nhau thì quan sát được rate từ $0.3 -> 0.35$ cho dữ liệu tin cậy (nhìn nhận qua folder ảnh).
 \\
-Sau đó, nhóm quyết định sinh ra nhiều bộ dữ liệu với các rate khác nhau vd bộ 1 gồm original + rate\_0.3 và bộ 2 gồm original + rate\_0.4 rồi đưa vào train model xem bộ dữ liệu nào tốt hơn. 
+Sau đó, nhóm quyết định sinh ra nhiều bộ dữ liệu với các rate khác nhau vd bộ 1 gồm $original + rate\_0.3$ và bộ $2$ gồm $original + rate\_0.4$ rồi đưa vào train model xem bộ dữ liệu nào tốt hơn. 
 \subsubsection{Phân tích distribution của tập val có gì bất thường so với train không}
 Nhóm đã vẽ các biểu đồ Histogram (giống Hướng tiếp cận 1 đã nêu) trên tập labels val và không phát hiện bất thường so với tập labels train từ các aspect của Bounding Box.
 \subsubsection{Phân tích sự đồng đều kích cỡ của các ảnh}
@@ -183,18 +184,60 @@ Mỗi nhóm có chung chỉ số W còn H giao động quanh số đã nêu ở 
 
 \subsection{Tiền xử lý dữ liệu}
 %Hằng và Sone ghi vào đây
-Trong phần này, nhóm xin trình bày về việc tiền xử lý dữ liệu và tăng cường dữ liệu (augmentation) cho tập dữ liệu ảnh và nhãn.
+Trong phần này, nhóm xin trình bày về việc tiền xử lý dữ liệu bằng cách tăng cường dữ liệu (augmentation) cho tập dữ liệu ảnh và nhãn. Việc tăng cường dữ liệu ảnh đã được thực hiện trên dữ liệu ảnh ban đầu ($original$ $data$) và dữ liệu ảnh đặc biệt có nguy cơ bị lỗi theo hướng tiếp cận 3 đã đề cập với $rate=0.3$ và $rate=0.35$.
 \subsubsection{Các kĩ thuật augmentation cơ bản}
 %Sone viết những cái sau vì Sone đã làm rồi
-Nhóm đã sử dụng thư viện augmentation của Python để thực hiện các kỹ thuật augmentation cơ bản sau đây:
+Nhóm đã sử dụng thư viện $albumentations$ của Python hỗ trợ để thực hiện các kỹ thuật augmentation cơ bản sau đây:
 \begin{itemize}
     \item Xoay ảnh theo nhiều góc
-    Để tạo ra các phiên bản mới của ảnh và nhãn, nhóm đã sử dụng phép xoay ảnh với nhiều góc khác nhau với giới hạn là $15$ độ. Quá trình này giúp tăng cường dữ liệu bằng cách tạo ra các ảnh có góc nhìn khác nhau, từ đó làm tăng tính đa dạng của tập dữ liệu.
-    \item Add noise: thực hiện lên bộ ảnh mà Hùng quyết định tập trung.
-    Nhóm đã áp dụng kỹ thuật thêm nhiễu vào ảnh để tạo ra các phiên bản mới với độ nhiễu khác nhau. Việc này giúp tạo ra sự đa dạng trong dữ liệu và làm tăng khả năng tổng quát hóa của mô hình.
+    \\Để tạo ra các phiên bản mới của ảnh và nhãn, nhóm đã sử dụng phép xoay ảnh với nhiều góc khác nhau trong đó giới hạn là $15^\circ$. Quá trình này giúp tăng cường dữ liệu bằng cách tạo ra các ảnh có góc nhìn khác nhau, từ đó làm tăng tính đa dạng của tập dữ liệu.
+    
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{.4\textwidth}
+          \includegraphics[width=1\linewidth]{images/original_img_1.jpg}
+          \caption{Ảnh gốc}
+        \end{subfigure}
+        \hspace{20mm}
+        \begin{subfigure}{.4\textwidth}
+          \includegraphics[width=1\linewidth]{images/rotated_img.png}
+          \caption{Ảnh sau khi xoay góc}
+        \end{subfigure}
+        \caption{Kết quả phép xoay ảnh theo góc giới hạn $15^\circ$}
+    \end{figure}
+
+    \item Add noise
+    %thực hiện lên bộ ảnh mà Hùng quyết định tập trung.
+    \\Nhóm đã áp dụng kỹ thuật thêm nhiễu vào ảnh để tạo ra các phiên bản mới với độ nhiễu khác nhau. Việc này giúp tạo ra sự đa dạng trong dữ liệu và làm tăng khả năng tổng quát hóa của mô hình.
     Nhóm sử dụng $2$ loại nhiễu để thêm vào ảnh chỉnh là gaussian noise và multipricate noise
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{.4\textwidth}
+          \includegraphics[width=1\linewidth]{images/gaussian_img.png}
+          \caption{Ảnh thêm nhiễu gaussian}
+        \end{subfigure}
+        \hspace{20mm}
+        \begin{subfigure}{.4\textwidth}
+          \includegraphics[width=1\linewidth]{images/multipricate_img.png}
+          \caption{Ảnh thêm nhiễu multipricate}
+        \end{subfigure}
+        \caption{Kết quả phép thêm nhiễu}
+    \end{figure}
     \item Scale ảnh
-    Nhóm đã thực hiện phép biến đổi scale ảnh để tạo ra các phiên bản mới có kích thước khác nhau. Điều này giúp tạo ra các ảnh có kích thước và tỷ lệ khác nhau, từ đó tăng cường tính đa dạng của tập dữ liệu.
+    \\Nhóm đã thực hiện phép biến đổi scale ảnh để tạo ra các phiên bản mới có kích thước khác nhau. Điều này giúp tạo ra các ảnh có kích thước và tỷ lệ khác nhau, từ đó tăng cường tính đa dạng của tập dữ liệu.
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{.4\textwidth}
+          \includegraphics[width=1\linewidth]{images/original_img_1.jpg}
+          \caption{Ảnh gốc}
+        \end{subfigure}
+        \hspace{20mm}
+        \begin{subfigure}{.4\textwidth}
+          \includegraphics[width=1\linewidth]{images/scaled_img.png}
+          \caption{Ảnh sau khi scale}
+        \end{subfigure}
+        \caption{Kết quả phép scale ảnh}
+    \end{figure}
     \item Dịch chuyển ảnh sang trái phải
     \item Crop ảnh chỉ show 1 phần (YOLO có sẵn nên Hà viết)
     \item Các kỹ thuật augmen khác được tích hợp sẵn trong framework YOLOv8 (Hà viết)
@@ -202,8 +245,21 @@ Nhóm đã sử dụng thư viện augmentation của Python để thực hiện
 \subsubsection{Các kĩ thuật augmentation nâng cao}
 
 \begin{itemize}
-    \item Kết hợp nhiều augmen trong cùng 1 bức ảnh
-    Nhóm đã kết hợp nhiều kỹ thuật augmentation cơ bản trong cùng một bức ảnh. Bằng cách này có thể tạo ra các phiên bản mới có sự đa dạng và phong phú hơn.
+    \item Kết hợp nhiều kỹ thuật augmentation trong cùng 1 bức ảnh
+    \\Nhóm đã kết hợp nhiều kỹ thuật augmentation cơ bản trong cùng một bức ảnh. Trong đó, ngoài $3$ phép biến đổi đã đề cập, nhóm đã kết hợp thêm các phép biến đổi như $Horizontal\_flip$, $Blur$ và $BrightnessContrast$, trong đó mỗi phép biến đổi con được thực hiện với xác suất $p=0.5$
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{.4\textwidth}
+          \includegraphics[width=1\linewidth]{images/original_img_2.jpg}
+          \caption{Ảnh gốc}
+        \end{subfigure}
+        \hspace{20mm}
+        \begin{subfigure}{.4\textwidth}
+          \includegraphics[width=1\linewidth]{images/combined_img.png}
+          \caption{Ảnh sau biến đổi với nhiều kỹ thuật}
+        \end{subfigure}
+        \caption{Kết quả phép biến đổi kết hợp nhiều kỹ thuật}
+    \end{figure}
     \item Brightness $\&$ Contrast Adjustment
     Nhóm cũng đã thực hiện điều chỉnh độ sáng và độ tương phản của ảnh. Điều này giúp tạo ra các phiên bản mới với độ tương phản và độ sáng khác nhau, từ đó làm tăng sự đa dạng của tập dữ liệu.
     \item Chuẩn hóa ảnh (không rõ YOLOv8 có làm hay không để Hà tìm hiểu)

@@ -1,0 +1,7 @@
+path: '/content/drive/MyDrive/wb_localization_dataset/wb_localization_dataset_retrain_200e_Ha'
+train: images/train #train (relative to 'path')
+val: images/val #val (relative to 'path')
+
+# Class 
+names: 
+  0: nom_char

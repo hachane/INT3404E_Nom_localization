@@ -1,0 +1,19 @@
+1; Việc 1 - tổng hợp lại các file colab, kaggle mình bị fail
+=> paste những cái link google colab failed vào làm bằng chứng
+2; Việc 2 - SIÊU QUAN TRỌNG: chuẩn bị file script => Sone với t đọc hiểu + code, Hùng + Hằng đọc hiểu
+2.1; Việc 2.1 - train lại với dữ liệu gamma' + 4 cái => Hùng với Hằng
+Hùng: train trên thêm trên bộ translated_original - train lại từ 87.9 v1 (hoặc 88.9 => m chia => Hùng diễn đạt lại cho Hằng, bộ train)
+QUAN TRỌNG: viết docs sử dụng data mỗi lần train => VIẾT DOCS 
+Hùng+Hằng: thảo luận với nhau train thêm bộ noise mới => hơi hơi quan trọng
+2.2; Việc 2.2 - bàn luận chiến lược chốt model? Trưa mai hoặc là chiều mai 
+87.9 original của Sone 
+88.9 v1: -> original của Sone với tập của Hằng: translate
+	-> val trên tập thầy ảnh đẹp: 88.9
+	-> val trên tập 200e: 65
+
+88.9 v2: -> hùng train từ v1 với dữ liệu NomNa của t, có dữ liệu của Hằng
+	-> val trên tập thầy ảnh đẹp: 87.2
+	-> val trên tập 200e: 80.5 
+
+
+3; Việc 3 - không quan trọng lắm, hoãn đến tuần sau được: viết readme, hoàn thiện full report

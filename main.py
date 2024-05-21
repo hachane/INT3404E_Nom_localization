@@ -22,8 +22,8 @@ def grading(model, image_directory, output_directory):
 
 if __name__ == "__main__":
     model = YOLO("model_path/YOLOv8_Colab_12_05_2024_v1_Ha/weights/best.pt")
-    image_directory = 'wb_localization_dataset_NomNa'
-    output_directory = 'FINAL_test/labels'
+    image_directory = 'FINAL_test/images'
+    output_directory = 'FINAL_test/labels/predict'
 
     os.makedirs(output_directory, exist_ok=True)
     grading(image_directory, output_directory)

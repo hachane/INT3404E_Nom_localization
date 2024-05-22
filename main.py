@@ -32,9 +32,9 @@ def grading_v2(model, image_directory, output_directory):
                     f.write('')
 
 if __name__ == "__main__":
-    model = YOLO("model_path/YOLOv8_Colab_12_05_2024_v1_Ha/weights/best.pt")
+    model = YOLO("model_path\Yolov5m_Colab_18_05_2024_889_v3_Sone\train10\weights\best.pt")
     image_directory = 'FINAL_test/images'
-    output_directory = 'FINAL_test/labels/predict'
+    output_directory = 'FINAL_test/labels/predict/CCWH_conf'
 
     os.makedirs(output_directory, exist_ok=True)
     grading_v2(image_directory, output_directory)

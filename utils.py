@@ -21,7 +21,7 @@ def plot_BB(image_path, coord_path):
     plt.imshow(image)
     for coord in coordinates:
         # Split the coordinates
-        x_upper_left, y_upper_left, x_below_right, y_below_right = map(float, coord)
+        x_upper_left, y_upper_left, x_below_right, y_below_right, conf_score = map(float, coord)
         x = x_upper_left
         y = y_upper_left
         w = x_below_right - x_upper_left

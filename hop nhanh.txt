@@ -16,4 +16,31 @@ Hùng+Hằng: thảo luận với nhau train thêm bộ noise mới => hơi hơi
 	-> val trên tập 200e: 80.5 
 
 
+## 1. Goal
+This repository help evaluating the following tasks:
+* Text detection: mAP@.5:.95
+* Text recognition: Accuracy
+* 2D-3D retrieval: MRR@5 
+
+
+## 2. Setup
+``
+    pip install -r requirements.txt
+``
+
+## 3. Evaluation
+
+### 3.1. Text detection
+
+``
+    python task1.py --gt GT_DIR --pred PRED_DIR --img IMAGE_DIR
+``
+
+where 
+* GT_DIR: the directory contains test grounth-truth files (*.txt)
+* PRED_IMG_DIR:  the directory contains your prediction output files (*.txt)
+* IMAGE_DIR: the directory contains test images (*.jpg)
+
+=> python task1.py --gt FINAL_test/labels/ground_truth/LTRB --pred FINAL_test/predict/LTRB --img FINAL_test/images
+
 3; Việc 3 - không quan trọng lắm, hoãn đến tuần sau được: viết readme, hoàn thiện full report

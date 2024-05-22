@@ -65,7 +65,30 @@ def plot_BB_center(image_path, coord_path):
         plt.gca().add_patch(rect_box)
 
     plt.show()
+def plot_BB_center_conf(image_path, coord_path):
+    image = read_image(image_path)
 
+    with open(coord_path, "r") as f:
+        coordinates = [line.strip().split()[1:] for line in f.readlines()]
+
+    plt.imshow(image)
+    for coord in coordinates:
+        # Split the coordinates
+        x_center, y_center, w, h, conf = map(float, coord)
+        x = x_center - w/2
+        y = y_center - h/2
+        # Scale the coordinates to the image dimensions
+        x *= image.shape[1]
+        y *= image.shape[0]
+        w *= image.shape[1]
+        h *= image.shape[0]
+        # Convert coordinates to integers
+        x, y, w, h = map(int, (x, y, w, h))
+
+        rect_box = plt.Rectangle((x, y), w, h, color='red', fill=False, lw=1)
+        plt.gca().add_patch(rect_box)
+
+    plt.show()
 # CONVERT X_CENTER, Y_CENTER, 
 def convert_coord(labels_folder, output_folder):
     os.makedirs(output_folder, exist_ok=True)

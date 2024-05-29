@@ -7,7 +7,7 @@ import sys
 import argparse
 import math
 from PIL import Image
-
+import time
 import numpy as np
 import random
 
@@ -356,6 +356,7 @@ def calculate_map(img_dir, gt_dir, pred_dir, temp_dir, threshold=0.5):
 
 def main():
     args = parse_args()
+    start_time = time.time()
     gt_dir = args.gt
     pred_dir = args.pred
     img_dir = args.img
@@ -371,6 +372,9 @@ def main():
         print(mAP*100)
     print(np.mean(map_list))
     shutil.rmtree(temp_dir)
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print("Execution time: ", execution_time)
 
 if __name__ == '__main__':
     main()

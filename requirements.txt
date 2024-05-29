@@ -1,3 +1,6 @@
-pandas==1.5.3
-numpy==1.24.2
-pillow==9.4.0
+numpy
+pandas
+matplotlib
+opencv-python
+ultralytics
+pillow

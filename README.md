@@ -20,7 +20,7 @@ pip install -r requirements.txt
 ├── data-augmentation\
 │   ├── augment_data #generated data using augmentation techniques\
 │   └── data_augmentation_anizme_and_hang #data augmentation script\
-│   └── utils #basic functions
+│   └── utils #basic functions\
 ├── dataset #datasets used in the project\
 ├── model_path #weights and biases of models\
 └── report #reports of the project\

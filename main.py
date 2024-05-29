@@ -1,39 +1,40 @@
 from ultralytics import YOLO
 import os
 
+# this is the function to generate output from trained model under the format: x_center normalized - y_center normalized - w - h - confidence score. 
+# The model is loaded by YOLO class of Ultralytics library. The image_directory is the folder directory of images you want to inference. The output_directory is the directory of outputs.
 def grading_v2(model, image_directory, output_directory):
     for filename in os.listdir(image_directory):
-        if filename.endswith('.jpg') or filename.endswith('.png'):
-            results = model.predict(os.path.join(image_directory, filename), save=True, stream=True)
-            txt_filename = os.path.join(output_directory, os.path.splitext(filename)[0] + '.txt')
-            # Check if results have any detections
-            detections = False
-            with open(txt_filename, 'w') as f:
-                for result in results:
-                    if len(result.boxes) > 0:
-                        detections = True
-                        boxes = result.boxes  
-                        conf_scores = boxes.conf
-                        classes = boxes.cls
-                        w_orig, h_orig = result.orig_shape
-                        print("width img:", w_orig)
-                        print("h img:", h_orig)
-                        for i in range(len(boxes)):
-                            x1, y1, x2, y2 = boxes[i].xywh[0].cpu().numpy().astype(int)
-                            print("Original res not scaled:", x1, y1, x2, y2)
-                            cls = int(classes[i])
-                            x1_norm = x1 / h_orig
-                            x2_norm = x2 / h_orig
-                            y1_norm = y1 / w_orig
-                            y2_norm = y2 / w_orig
-                            f.write(f"{cls} {x1_norm:.4f} {y1_norm:.4f} {x2_norm:.4f} {y2_norm:.4f} {conf_scores[i]:.4f}\n")
-                # Empty file if no detections (consistency with previous behavior)
-                if not detections:
-                    f.write('')
+      results = model.predict(os.path.join(image_directory, filename), save=True, stream=True)
+      txt_filename = os.path.join(output_directory, os.path.splitext(filename)[0] + '.txt')
+
+      lines = []
+      detections = False
+
+      for result in results:
+        if len(result.boxes) > 0:
+            detections = True
+            boxes = result.boxes
+            conf_scores = boxes.conf
+            classes = boxes.cls
+            w_orig, h_orig = result.orig_shape
+            for i in range(len(boxes)):
+              x, y, w, h = boxes[i].xywhn[0].cpu().numpy().astype(float)
+              cls = int(classes[i])
+              lines.append(f"{cls} {x:.6f} {y:.6f} {w:.6f} {h:.6f} {conf_scores[i]:.6f}\n")
+
+      with open(txt_filename, 'w') as f:
+        f.writelines(lines)
+        if not detections:
+          f.write('')
+        f.close()
 
 if __name__ == "__main__":
+    # loading model
     model = YOLO("model_path/Yolov5m_Colab_18_05_2024_889_v3_Sone/train10/weights/best.pt")
+    # image directory
     image_directory = 'FINAL_test/images'
+    #output_directory with the format mentioned above.
     output_directory = 'FINAL_test/labels/predict/CCWH_conf'
 
     os.makedirs(output_directory, exist_ok=True)

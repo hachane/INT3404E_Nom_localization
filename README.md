@@ -28,7 +28,7 @@ Tang Vinh Ha - 22028129\
 Vu Nguyet Hang - 22028079\
 Le Xuan Hung - 22028172\
 Le Thi Hai Anh - 22028162
-##Result
+## Result
 With a strategy mainly focusing on data and taking advantage of famous existing architectures, our team had a model accuracy of 86.7% on the original val set and 83.67% on the val set provided on evaluation day.
 ## Reports
 For more information on the methods and models used in this project, please refer to [report](report)
